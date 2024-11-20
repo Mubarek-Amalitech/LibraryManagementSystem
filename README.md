@@ -25,3 +25,8 @@ The project includes a **JavaFX**-based user-friendly interface, which features:
 - **Buttons** for executing actions (e.g., borrowing or returning books).
 
 This interface enhances usability by providing an intuitive platform for library administrators and patrons to interact with the system.
+
+## ER- Diagram
+![ErDiagram-LibraryManagementSystem](https://github.com/user-attachments/assets/68b26632-855d-402a-8030-b4e049a18a80)
+
+
