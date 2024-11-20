@@ -153,11 +153,12 @@ public class BookReturnFormController {
         pstm.setString(2, txt_issu_date.getText());
         pstm.setString(3, txt_rt_date.getValue().toString());
         pstm.setString(4, txt_fine.getText());
+
         int affectedRows = pstm.executeUpdate();
 
         if (affectedRows > 0) {
             System.out.println("successful");
-            String sql4 = "Update bookdetail SET states=? where id=?";
+            String sql4 = "Update bookdetail SET status=? where id=?";
             PreparedStatement pstm2 = connection.prepareStatement(sql4);
 
             String sql3 = "select bookId from issuetb where issueId=?";
@@ -187,12 +188,12 @@ public class BookReturnFormController {
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
         }
-        connection.close();
-        cmb_issue_id.getItems().remove(issueID);
-        cmb_issue_id.getSelectionModel().clearSelection();
-        txt_issu_date.clear();
-        txt_fine.clear();
-        txt_rt_date.getEditor().clear();
+//        connection.close();
+//        cmb_issue_id.getItems().remove(issueID);
+//        cmb_issue_id.getSelectionModel().clearSelection();
+//        txt_issu_date.clear();
+//        txt_fine.clear();
+//        txt_rt_date.getEditor().clear();
     }
 
     public void img_back(MouseEvent event) throws IOException {

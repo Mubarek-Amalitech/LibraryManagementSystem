@@ -37,7 +37,7 @@ public class BookSearchFormController {
         tbl_bk.getColumns().get(3).setCellValueFactory(new PropertyValueFactory<>("status"));
 
         try {
-            Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/library", "root", "1234");
+            Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/library", "root", "Mubarak771998");
             ObservableList<BookTM> books = tbl_bk.getItems();
 
             String sql = "SELECT * from bookdetail";
