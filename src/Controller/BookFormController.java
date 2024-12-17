@@ -1,5 +1,4 @@
 package Controller;
-
 import Model.BookTM;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXTextField;
@@ -34,7 +33,6 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Optional;
-
 public class BookFormController {
     public JFXTextField txt_bk_id;
     public JFXTextField txt_bk_title;
@@ -44,8 +42,8 @@ public class BookFormController {
     public AnchorPane bk_root;
     public JFXButton btn_add;
     private Connection connection;
-
     //JDBC
+
     private PreparedStatement selectall;
     private PreparedStatement selectID;
     private PreparedStatement newIdQuery;
@@ -56,15 +54,13 @@ public class BookFormController {
     public void initialize() throws ClassNotFoundException {
         //disable id field
         txt_bk_id.setDisable(true);
-
         //load table
         tbl_bk.getColumns().get(0).setCellValueFactory(new PropertyValueFactory<>("id"));
         tbl_bk.getColumns().get(1).setCellValueFactory(new PropertyValueFactory<>("title"));
         tbl_bk.getColumns().get(2).setCellValueFactory(new PropertyValueFactory<>("author"));
         tbl_bk.getColumns().get(3).setCellValueFactory(new PropertyValueFactory<>("status"));
 
-        Class.forName("com.mysql.jdbc.Driver");
-
+//        Class<?> DB = Class.forName("com.mysql.jdbc.Driver");
         try {
             connection = DBConnection.getInstance().getConnection();
             selectall = connection.prepareStatement("SELECT * from bookdetail");
@@ -86,34 +82,30 @@ public class BookFormController {
             }
             tbl_bk.setItems(members);
         } catch (SQLException e) {
-            e.printStackTrace();
+            throw  new RuntimeException(e.getMessage());
         }
 
-        tbl_bk.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<BookTM>() {
-            @Override
-            public void changed(ObservableValue<? extends BookTM> observable, BookTM oldValue, BookTM newValue) {
-                BookTM selectedItem = tbl_bk.getSelectionModel().getSelectedItem();
+        tbl_bk.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
+            BookTM selectedItem = tbl_bk.getSelectionModel().getSelectedItem();
+            try {
+                connection = null;
                 try {
-                    connection = null;
-                    try {
-                        selectID.setString(1, selectedItem.getId());
-                        ResultSet rst = selectID.executeQuery();
-
-                        if (rst.next()) {
-                            txt_bk_id.setText(rst.getString(1));
-                            txt_bk_title.setText(rst.getString(2));
-                            txt_bk_auth.setText(rst.getString(3));
-                            txt_bk_st.setText(rst.getString(4));
-                            txt_bk_id.setDisable(true);
-                            btn_add.setText("Update");
-                        }
+                    selectID.setString(1, selectedItem.getId());
+                    ResultSet rst = selectID.executeQuery();
+                    if (rst.next()) {
+                        txt_bk_id.setText(rst.getString(1));
+                        txt_bk_title.setText(rst.getString(2));
+                        txt_bk_auth.setText(rst.getString(3));
+                        txt_bk_st.setText(rst.getString(4));
+                        txt_bk_id.setDisable(true);
                         btn_add.setText("Update");
-                    } catch (SQLException e) {
-                        e.printStackTrace();
                     }
-                } catch (NullPointerException n) {
-                    return;
+                    btn_add.setText("Update");
+                } catch (SQLException e) {
+                    throw  new RuntimeException(e.getMessage());
                 }
+            } catch (NullPointerException n) {
+                throw new RuntimeException("");
             }
         });
     }
@@ -127,7 +119,6 @@ public class BookFormController {
         txt_bk_auth.clear();
         txt_bk_title.clear();
         txt_bk_title.requestFocus();
-
         ResultSet rst = newIdQuery.executeQuery();
 
         String ids = null;
@@ -185,14 +176,13 @@ public class BookFormController {
             }
         } else {
             if (btn_add.getText().equals("Update")) {
-                for (int i = 0; i < books.size(); i++) {
-                    if (txt_bk_id.getText().equals(books.get(i).getId())) {
+                for (BookTM book : books) {
+                    if (txt_bk_id.getText().equals(book.getId())) {
                         updateQuarary.setString(1, txt_bk_title.getText());
                         updateQuarary.setString(2, txt_bk_auth.getText());
                         updateQuarary.setString(3, txt_bk_st.getText());
                         updateQuarary.setString(4, txt_bk_id.getText());
                         int affected = updateQuarary.executeUpdate();
-
                         if (affected > 0) {
                             Alert alert = new Alert(Alert.AlertType.INFORMATION,
                                     "Record updated!",
@@ -213,7 +203,7 @@ public class BookFormController {
             tbl_bk.getItems().clear();
             initialize();
         } catch (ClassNotFoundException e) {
-            e.printStackTrace();
+            throw  new RuntimeException(e.getMessage());
         }
     }
 
@@ -241,13 +231,14 @@ public class BookFormController {
             tbl_bk.getItems().clear();
             initialize();
         } catch (ClassNotFoundException e) {
-            e.printStackTrace();
+            throw  new RuntimeException(e.getMessage());
         }
     }
 
     public void img_back(MouseEvent event) throws IOException {
 
         URL resource = this.getClass().getResource("/View/HomeFormView.fxml");
+        assert resource != null;
         Parent root = FXMLLoader.load(resource);
         Scene scene = new Scene(root);
         Stage primaryStage = (Stage) this.bk_root.getScene().getWindow();

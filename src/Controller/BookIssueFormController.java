@@ -36,6 +36,8 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Optional;
+import java.util.logging.Logger;
+
 
 public class BookIssueFormController {
     public JFXTextField txt_issid;
@@ -46,7 +48,7 @@ public class BookIssueFormController {
     public JFXComboBox book_id;
     public TableView<BookIssueTM> bk_ssue_tbl;
     public AnchorPane bk_iss;
-    private Connection connection;
+     Connection connection;
 
     //JDBC
     private PreparedStatement selectALl;
@@ -54,6 +56,7 @@ public class BookIssueFormController {
     private PreparedStatement selectbkdtl;
     private PreparedStatement table;
     private PreparedStatement delete;
+
 
     public void initialize() throws ClassNotFoundException {
         Class.forName("com.mysql.jdbc.Driver");
@@ -103,9 +106,9 @@ public class BookIssueFormController {
                 cmbbooks.add(rst2.getString(1));
             }
         } catch (SQLException e) {
-            e.printStackTrace();
+
         }
-        mem_is_id.getSelectionModel().selectedItemProperty().addListener(new ChangeListener() {
+        mem_is_id.getSelectionModel().selectedItemProperty().addListener (new ChangeListener() {
             @Override
             public void changed(ObservableValue observable, Object oldValue, Object newValue) {
 
@@ -150,7 +153,6 @@ public class BookIssueFormController {
                             }
                         }
                     } catch (SQLException e) {
-                        e.printStackTrace();
                     }
                 }
             }
@@ -158,7 +160,8 @@ public class BookIssueFormController {
     }
 
     //button new action
-    public void new_action(ActionEvent actionEvent) throws SQLException {
+    public void new_action() throws SQLException {
+
         txt_title.clear();
         txt_name.clear();
         mem_is_id.getSelectionModel().clearSelection();
@@ -199,15 +202,15 @@ public class BookIssueFormController {
         ObservableList<BookTM> books = FXCollections.observableList(DB.books);
 
         if (txt_issid.getText().isEmpty() ||
-                book_id.getSelectionModel().getSelectedItem().equals(null) ||
-                mem_is_id.getSelectionModel().getSelectedItem().equals(null)
-                || txt_isu_date.getValue().toString().equals(null)) {
+                book_id.getSelectionModel().getSelectedItem() == null ||
+                mem_is_id.getSelectionModel().getSelectedItem() == null) {
             Alert alert = new Alert(Alert.AlertType.ERROR,
                     "Please fill your details.",
                     ButtonType.OK);
             Optional<ButtonType> buttonType = alert.showAndWait();
             return;
         } else {
+            txt_isu_date.getValue();
             String memberId = (String) mem_is_id.getSelectionModel().getSelectedItem();
             String bookId = (String) book_id.getSelectionModel().getSelectedItem();
             issued.add(new BookIssueTM(txt_issid.getText(), txt_isu_date.getValue().toString(), memberId, bookId));
@@ -238,7 +241,7 @@ public class BookIssueFormController {
                     }
                 }
             } catch (SQLException e) {
-                e.printStackTrace();
+                throw new SQLException("something went wrong");
             }
         }
 
@@ -319,4 +322,26 @@ public class BookIssueFormController {
             icon.setEffect(glow);
         }
     }
+
+    public PreparedStatement getDelete() {
+        return delete;
+    }
+
+    public PreparedStatement getTable() {
+        return table;
+    }
+
+    public PreparedStatement getSelectbkdtl() {
+        return selectbkdtl;
+    }
+
+    public PreparedStatement getSelectmemID() {
+        return selectmemID;
+    }
+
+    public PreparedStatement getSelectALl() {
+        return selectALl;
+    }
+
+
 }

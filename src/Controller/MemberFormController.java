@@ -48,11 +48,11 @@ public class MemberFormController {
     public JFXButton btn_add;
 
     //JDBC
-    private Connection connection;
+    public Connection connection;
     private PreparedStatement selectall;
-    private PreparedStatement newIdQuery;
-    private PreparedStatement addToTable;
-    private PreparedStatement updateQuarary;
+    PreparedStatement newIdQuery;
+    public PreparedStatement addToTable;
+    PreparedStatement updateQuarary;
     private PreparedStatement deleteQuarary;
     private PreparedStatement slectmemID;
 
@@ -186,8 +186,8 @@ public class MemberFormController {
             }
         } else {
             if (btn_add.getText().equals("Update")) {
-                for (int i = 0; i < members.size(); i++) {
-                    if (mem_id.getText().equals(members.get(i).getId())) {
+                for (MemberTM member : members) {
+                    if (mem_id.getText().equals(member.getId())) {
                         try {
                             updateQuarary.setString(1, mem_nme.getText());
                             updateQuarary.setString(2, mem_addss.getText());
@@ -207,7 +207,7 @@ public class MemberFormController {
                                 Optional<ButtonType> buttonType = alert.showAndWait();
                             }
                         } catch (SQLException e) {
-                            e.printStackTrace();
+                            throw new SQLException("failed to execute query" + e.getCause() + e.getMessage());
                         }
                     }
                 }
@@ -218,7 +218,7 @@ public class MemberFormController {
             mem_tbl.getItems().clear();
             initialize();
         } catch (ClassNotFoundException e) {
-            e.printStackTrace();
+             throw   new RuntimeException(e.getMessage());
         }
     }
 
@@ -247,7 +247,7 @@ public class MemberFormController {
             mem_tbl.getItems().clear();
             initialize();
         } catch (ClassNotFoundException e) {
-            e.printStackTrace();
+            throw  new RuntimeException(e.getMessage()+e.getCause());
         }
     }
 

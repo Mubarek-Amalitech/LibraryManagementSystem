@@ -8,11 +8,10 @@ import java.sql.ResultSet;
 public class DBConnection {
 
     private static DBConnection dbConnection;
-    private Connection connection;
-
+    private final Connection connection;
     private DBConnection() {
         try {
-            Class.forName("com.mysql.jdbc.Connection");
+           // Class.forName("com.mysql.jdbc.Connection");
             connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/library?createDatabaseIfNotExist=true&allowMultiQueries=true", "root", "Mubarak771998");
             PreparedStatement pstm = connection.prepareStatement("SHOW TABLES");
             ResultSet resultSet = pstm.executeQuery();

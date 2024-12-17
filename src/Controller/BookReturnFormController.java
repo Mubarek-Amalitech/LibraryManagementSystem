@@ -1,5 +1,4 @@
 package Controller;
-
 import Model.BookReturnTM;
 import com.jfoenix.controls.JFXComboBox;
 import com.jfoenix.controls.JFXDatePicker;
@@ -32,7 +31,6 @@ import java.sql.*;
 import java.time.LocalDate;
 import java.util.Optional;
 import java.util.concurrent.TimeUnit;
-
 public class BookReturnFormController {
     public AnchorPane Returnroot;
     public JFXTextField txt_issu_date;
@@ -188,12 +186,7 @@ public class BookReturnFormController {
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
         }
-//        connection.close();
-//        cmb_issue_id.getItems().remove(issueID);
-//        cmb_issue_id.getSelectionModel().clearSelection();
-//        txt_issu_date.clear();
-//        txt_fine.clear();
-//        txt_rt_date.getEditor().clear();
+
     }
 
     public void img_back(MouseEvent event) throws IOException {
