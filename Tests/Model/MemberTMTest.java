@@ -1,6 +1,5 @@
-package Controller;
+package Model;
 
-import Model.MemberTM;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -8,15 +7,10 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
 
-import java.sql.SQLException;
-
 public class MemberTMTest {
 
     @Mock
     MemberTM memberTM;
-
-
-
 
     @BeforeEach
     void setup(){
@@ -45,7 +39,6 @@ public class MemberTMTest {
 
     @Test
     void testMemberMethodCalls(){
-
     }
 
 }

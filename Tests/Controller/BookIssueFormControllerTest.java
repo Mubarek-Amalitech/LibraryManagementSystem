@@ -20,8 +20,6 @@ import static org.mockito.Mockito.*;
 
 public class BookIssueFormControllerTest {
 
-
-
     @Mock
     BookIssueFormController bookIssueFormController;
 
@@ -40,7 +38,6 @@ public class BookIssueFormControllerTest {
  @Mock
     ResultSet resultSet;
 
- PreparedStatement mockP= Mockito.mock(PreparedStatement.class);
 
 
     @BeforeEach

@@ -111,7 +111,7 @@ public class BookFormController {
     }
 
     //button new action
-    public void btn_new(ActionEvent actionEvent) throws SQLException {
+    public void btn_new() throws SQLException {
         btn_add.setText("Add");
         txt_bk_st.setText("Available");
         txt_bk_st.setDisable(true);
@@ -145,7 +145,7 @@ public class BookFormController {
     }
 
     //button add action
-    public void btn_Add(ActionEvent actionEvent) throws SQLException {
+    public void btn_Add() throws SQLException {
         ObservableList<BookTM> books = FXCollections.observableList(DB.books);
 
         if (txt_bk_id.getText().isEmpty() || txt_bk_title.getText().isEmpty() || txt_bk_auth.getText().isEmpty()) {
@@ -208,7 +208,7 @@ public class BookFormController {
     }
 
     //button delete action
-    public void btn_dlt(ActionEvent actionEvent) throws SQLException {
+    public void btn_dlt() throws SQLException {
         BookTM selectedItem = tbl_bk.getSelectionModel().getSelectedItem();
         if (tbl_bk.getSelectionModel().isEmpty()) {
             Alert alert = new Alert(Alert.AlertType.ERROR,
@@ -235,7 +235,7 @@ public class BookFormController {
         }
     }
 
-    public void img_back(MouseEvent event) throws IOException {
+    public void img_back() throws IOException {
 
         URL resource = this.getClass().getResource("/View/HomeFormView.fxml");
         assert resource != null;

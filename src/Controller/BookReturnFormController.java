@@ -130,7 +130,7 @@ public class BookReturnFormController {
     }
 
     //btn add action
-    public void btn_add_inveb(ActionEvent actionEvent) throws SQLException {
+    public void btn_add_inveb() throws SQLException {
         if (cmb_issue_id.getSelectionModel().isEmpty() ||
                 txt_issu_date.getText().isEmpty() ||
                 txt_rt_date.getValue() == null ||
@@ -189,7 +189,7 @@ public class BookReturnFormController {
 
     }
 
-    public void img_back(MouseEvent event) throws IOException {
+    public void img_back() throws IOException {
         URL resource = this.getClass().getResource("/View/HomeFormView.fxml");
         Parent root = FXMLLoader.load(resource);
         Scene scene = new Scene(root);
